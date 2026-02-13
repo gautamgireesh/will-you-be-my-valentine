@@ -1,10 +1,21 @@
-"use client";
 import { useState } from "react";
+import FlashlightReveal from "./components/FlashlightReveal";
+import Wordle from "./components/Wordle";
+
+type Stage = "wordle" | "reveal" | "valentine";
 
 export default function Page() {
+  const [stage, setStage] = useState<Stage>("wordle");
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
   const yesButtonSize = noCount * 20 + 16;
+
+  if (stage === "wordle") {
+    return <Wordle onComplete={() => setStage("reveal")} />;
+  }
+  if (stage === "reveal") {
+    return <FlashlightReveal onComplete={() => setStage("valentine")} />;
+  }
 
   const handleNoClick = () => {
     setNoCount(noCount + 1);
